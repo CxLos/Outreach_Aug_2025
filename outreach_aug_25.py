@@ -960,7 +960,7 @@ df_table = go.Figure(data=[go.Table(
 
 df_table.update_layout(
     autosize=False,
-    width=len(df.columns) * 100,   # total width = #columns × col width
+    width=len(df.columns) * 200,   # total width = #columns × col width
     height=900,
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)',
