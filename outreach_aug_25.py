@@ -75,9 +75,11 @@ df = df.apply(
 color_sequence = px.colors.qualitative.Plotly
 
 # Get the reporting month:
+df = df.sort_values(by='Start Date', ascending=True)
 current_month = datetime(2025, 8, 1).strftime("%B")
 report_year = datetime(2025, 8, 1).strftime("%Y")
 report = 'Outreach'
+mo = 'Aug'
 # -------------------------------------------------
 # print(df)
 # print(df[["Date of Activity", "Total travel time (minutes):"]])
@@ -162,12 +164,12 @@ inplace=True)
 
 # print(df.dtypes)
 
-# -------------------------- Care Events --------------------------- #
+# -------------------------- Total Events --------------------------- #
 
-admin_events = len(df)
-# print("Total Marcom events:", marcom_events)
+total_events = len(df)
+# print("Total events:", total_events)
 
-# ---------------------------- Care Hours ---------------------------- #
+# ---------------------------- Total Hours ---------------------------- #
 
 # print("Duration Unique Before:", df['Duration'].unique().tolist())
 
@@ -178,11 +180,11 @@ df['Duration'] = pd.to_numeric(df['Duration'], errors='coerce')
 
 # print("Duration Unique After:", df['Duration'].unique().tolist())
 
-admin_hours = df['Duration'].sum()
-admin_hours=round(admin_hours)
+total_hours = df['Duration'].sum()
+total_hours=round(total_hours)
 # print('Total Activity Duration:', admin_hours, 'hours')
 
-# ------------------------- Care Time ------------------------------ #
+# ------------------------- Total Travel Time ------------------------------ #
 
 # print("Travel Unique before:", df['Travel'].unique().tolist())
 
@@ -305,8 +307,8 @@ group_bar=px.bar(
     color='Group',
     text='Count',
 ).update_layout(
-    height=800, 
-    width=1500,
+    # height=800, 
+    # width=1500,
     title=dict(
         text=f'{current_month} {report} Groups',
         x=0.5, 
@@ -362,8 +364,8 @@ group_pie=px.pie(
     names="Group",
     values='Count' 
 ).update_layout(
-    height=800,
-    width=950,
+    # height=800,
+    # width=950,
     title=f'{current_month} Ratio of {report} Groups',
     title_x=0.5,
     font=dict(
@@ -455,8 +457,8 @@ task_bar=px.bar(
     color='Task',
     text='Count',
 ).update_layout(
-    height=1000, 
-    width=1500,
+    # height=1000, 
+    # width=1500,
     title=dict(
         text=f'{current_month} {report} Tasks',
         x=0.5, 
@@ -512,8 +514,8 @@ task_pie=px.pie(
     names="Task",
     values='Count' 
 ).update_layout(
-    height=1000,
-    width=950,
+    # height=1000,
+    # width=950,
     title=f'{current_month} Ratio of {report} Tasks',
     title_x=0.5,
     font=dict(
@@ -589,8 +591,8 @@ tag_bar=px.bar(
     color='Tags',
     text='Count',
 ).update_layout(
-    height=1100, 
-    width=1500,
+    # height=1100, 
+    # width=1500,
     title=dict(
         text=f'{current_month} {report} Tags',
         x=0.5, 
@@ -646,8 +648,8 @@ tag_pie=px.pie(
     names="Tags",
     values='Count' 
 ).update_layout(
-    height=1200,
-    width=950,
+    # height=1200,
+    # width=950,
     title=f'{current_month} Ratio of {report} Tags',
     title_x=0.5,
     font=dict(
@@ -724,8 +726,8 @@ collab_bar=px.bar(
     color='Collab',
     text='Count',
 ).update_layout(
-    height=850, 
-    width=1500,
+    # height=850, 
+    # width=1500,
     title=dict(
         text=f'{current_month} {report} Collaborated Entities',
         x=0.5, 
@@ -781,8 +783,8 @@ collab_pie=px.pie(
     names="Collab",
     values='Count' 
 ).update_layout(
-    height=850,
-    width=1500,
+    # height=850,
+    # width=1500,
     title=f'{current_month} Ratio of Collaborated Entities',
     title_x=0.5,
     font=dict(
@@ -863,8 +865,8 @@ user_bar=px.bar(
     color='User',
     text='Count',
 ).update_layout(
-    height=850, 
-    width=1500,
+    # height=850, 
+    # width=1500,
     title=dict(
         text=f'{current_month} User Submissions',
         x=0.5, 
@@ -920,8 +922,8 @@ user_pie=px.pie(
     names="User",
     values='Count' 
 ).update_layout(
-    height=900,
-    width=1500,
+    # height=900,
+    # width=1500,
     title=f'{current_month} Ratio of User Submissions',
     title_x=0.5,
     font=dict(
@@ -939,26 +941,39 @@ user_pie=px.pie(
 
 # ========================== DataFrame Table ========================== #
 
-# MarCom Table
-admin_table = go.Figure(data=[go.Table(
-    # columnwidth=[50, 50, 50],  # Adjust the width of the columns
+df_table = go.Figure(data=[go.Table(
     header=dict(
         values=list(df.columns),
-        fill_color='paleturquoise',
+        fill_color='#34A853',
         align='center',
-        height=30,  # Adjust the height of the header cells
-        # line=dict(color='black', width=1),  # Add border to header cells
-        font=dict(size=12)  # Adjust font size
+        height=30,
+        font=dict(size=16, color='white', family='Calibri') 
     ),
     cells=dict(
         values=[df[col] for col in df.columns],
         fill_color='lavender',
         align='left',
-        height=25,  # Adjust the height of the cells
-        # line=dict(color='black', width=1),  # Add border to cells
-        font=dict(size=12)  # Adjust font size
+        height=25,
+        font=dict(size=12)
     )
 )])
+
+df_table.update_layout(
+    autosize=False,
+    width=len(df.columns) * 100,   # total width = #columns × col width
+    height=900,
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    shapes=[
+        dict(
+            type="rect",
+            xref="paper", yref="paper",
+            x0=0, y0=0, x1=1, y1=1,
+            line=dict(color="black", width=2),
+            fillcolor="rgba(0,0,0,0)"
+        )
+    ],
+)
 
 # ============================== Dash Application ========================== #
 
@@ -967,296 +982,366 @@ server= app.server
 
 app.layout = html.Div(
     children=[ 
-    html.Div(
-        className='divv', 
-        children=[ 
+        html.Div(
+            className='divv', 
+            children=[ 
+                html.H1(
+                    f'BMHC {report} Activity Report', 
+                    className='title'),
+                html.H1(
+                    f'{current_month} {report_year}', 
+                    className='title2'),
+                html.Div(
+                    className='btn-box', 
+                    children=[
+                        html.A(
+                            'Repo',
+                            href=f'https://github.com/CxLos/{report}_{mo}_{report_year}',
+                            className='btn'
+                        ),
+                    ]
+                ),
+            ]
+        ),  
+
+# ============================ Rollups ========================== #
+
+html.Div(
+    className='rollup-row',
+    children=[
+        
+        html.Div(
+            className='rollup-box-tl',
+            children=[
+                html.Div(
+                    className='title-box',
+                    children=[
+                        html.H3(
+                            className='rollup-title',
+                            children=[f'{current_month} {report} Events']
+                        ),
+                    ]
+                ),
+
+                html.Div(
+                    className='circle-box',
+                    children=[
+                        html.Div(
+                            className='circle-1',
+                            children=[
+                                html.H1(
+                                className='rollup-number',
+                                children=[total_events]
+                            ),
+                            ]
+                        )
+                    ],
+                ),
+            ]
+        ),
+        html.Div(
+            className='rollup-box-tr',
+            children=[
+                html.Div(
+                    className='title-box',
+                    children=[
+                        html.H3(
+                            className='rollup-title',
+                            children=[f'{current_month} People Engaged']
+                        ),
+                    ]
+                ),
+                html.Div(
+                    className='circle-box',
+                    children=[
+                        html.Div(
+                            className='circle-2',
+                            children=[
+                                html.H1(
+                                className='rollup-number',
+                                children=[df_engaged]
+                            ),
+                            ]
+                        )
+                    ],
+                ),
+            ]
+        ),
+    ]
+),
+
+html.Div(
+    className='rollup-row',
+    children=[
+        html.Div(
+            className='rollup-box-bl',
+            children=[
+                html.Div(
+                    className='title-box',
+                    children=[
+                        html.H3(
+                            className='rollup-title',
+                            children=[f'{current_month} {report} Hours']
+                        ),
+                    ]
+                ),
+
+                html.Div(
+                    className='circle-box',
+                    children=[
+                        html.Div(
+                            className='circle-3',
+                            children=[
+                                html.H1(
+                                className='rollup-number',
+                                children=[total_hours]
+                            ),
+                            ]
+                        )
+                    ],
+                ),
+            ]
+        ),
+        html.Div(
+            className='rollup-box-br',
+            children=[
+                html.Div(
+                    className='title-box',
+                    children=[
+                        html.H3(
+                            className='rollup-title',
+                            children=[f'{current_month} Travel Hours']
+                        ),
+                    ]
+                ),
+                html.Div(
+                    className='circle-box',
+                    children=[
+                        html.Div(
+                            className='circle-4',
+                            children=[
+                                html.H1(
+                                className='rollup-number',
+                                children=[df_travel]
+                                ),
+                            ]
+                        )
+                    ],
+                ),
+            ]
+        ),
+    ]
+),
+
+# ============================ Visuals ========================== #
+
+html.Div(
+    className='graph-container',
+    children=[
+        
         html.H1(
-            f'Community {report} Report', 
-            className='title'),
-        html.H1(
-            f'{current_month} {report_year}', 
-            className='title2'),
+            className='visuals-text',
+            children='Visuals'
+        ),
+        
+        # html.Div(
+        #     className='graph-row',
+        #     children=[
+        #         html.Div(
+        #             className='graph-box',
+        #             children=[
+        #                 dcc.Graph(
+        #                     className='graph',
+        #                     figure=race_bar
+        #                 )
+        #             ]
+        #         ),
+        #         html.Div(
+        #             className='graph-box',
+        #             children=[
+        #                 dcc.Graph(
+        #                     className='graph',
+        #                     figure=race_pie
+        #                 )
+        #             ]
+        #         ),
+        #     ]
+        # ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=group_bar
+                        )
+                    ]
+                ),
+            ]
+        ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=group_pie
+                        )
+                    ]
+                ),
+            ]
+        ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=task_bar
+                        )
+                    ]
+                ),
+            ]
+        ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=task_pie
+                        )
+                    ]
+                ),
+            ]
+        ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=collab_bar
+                        )
+                    ]
+                ),
+            ]
+        ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=collab_pie
+                        )
+                    ]
+                ),
+            ]
+        ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=tag_bar
+                        )
+                    ]
+                ),
+            ]
+        ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=tag_pie
+                        )
+                    ]
+                ),
+            ]
+        ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=user_bar
+                        )
+                    ]
+                ),
+            ]
+        ),
+        
+        html.Div(
+            className='graph-row',
+            children=[
+                html.Div(
+                    className='wide-box',
+                    children=[
+                        dcc.Graph(
+                            className='wide-graph',
+                            figure=user_pie
+                        )
+                    ]
+                ),
+            ]
+        ),
+    ]
+),
+
+# ============================ Data Table ========================== #
+
     html.Div(
-        className='btn-box', 
+        className='data-box',
         children=[
-        html.A(
-            'Repo',
-            href=f'https://github.com/CxLos/{report}_{current_month}_{report_year}',
-            className='btn'),
-        ]),
-    ]),    
-
-# Data Table
-# html.Div(
-#     className='row0',
-#     children=[
-#         html.Div(
-#             className='table',
-#             children=[
-#                 html.H1(
-#                     className='table-title',
-#                     children='Data Table'
-#                 )
-#             ]
-#         ),
-#         html.Div(
-#             className='table2', 
-#             children=[
-#                 dcc.Graph(
-#                     className='data',
-#                     figure=admin_table
-#                 )
-#             ]
-#         )
-#     ]
-# ),
-
-# ROW 1
-html.Div(
-    className='row1',
-    children=[
-        html.Div(
-            className='graph11',
-            children=[
-            html.Div(
-                className='high1',
-                children=[f'{current_month} {report} Events']
+            html.H1(
+                className='table-title-text',
+                children=f'{report} Activity Table'
             ),
-            html.Div(
-                className='circle',
+            html.Div(  
+                className='table-scroll',
                 children=[
-                    html.Div(
-                        className='hilite',
-                        children=[
-                            html.H1(
-                            className='high2',
-                            children=[admin_events]
-                    ),
-                        ]
+                    dcc.Graph(
+                        className='data',
+                        figure=df_table,
+                            # style={'height': '800px'}, 
+                            config={'responsive': True}
                     )
- 
-                ],
-            ),
-            ]
-        ),
-        html.Div(
-            className='graph22',
-            children=[
-            html.Div(
-                className='high3',
-                children=[f'{current_month} People Engaged']
-            ),
-            html.Div(
-                className='circle2',
-                children=[
-                    html.Div(
-                        className='hilite',
-                        children=[
-                            html.H1(
-                            className='high4',
-                            children=[df_engaged]
-                    ),
-                        ]
-                    )
-                ],
-            ),
-            ]
-        ),
-    ]
-),
-
-# ROW 1
-html.Div(
-    className='row1',
-    children=[
-        html.Div(
-            className='graph11',
-            children=[
-            html.Div(
-                className='high1',
-                children=[f'{current_month} {report} Hours']
-            ),
-            html.Div(
-                className='circle',
-                children=[
-                    html.Div(
-                        className='hilite',
-                        children=[
-                            html.H1(
-                            className='high6',
-                            children=[admin_hours]
-                    ),
-                        ]
-                    )
- 
-                ],
-            ),
-            ]
-        ),
-        html.Div(
-            className='graph22',
-            children=[
-            html.Div(
-                className='high3',
-                children=[f'{current_month} {report} Travel Hours']
-            ),
-            html.Div(
-                className='circle2',
-                children=[
-                    html.Div(
-                        className='hilite',
-                        children=[
-                            html.H1(
-                            className='high8',
-                            children=[df_travel]
-                    ),
-                        ]
-                    )
-                ],
-            ),
-            ]
-        ),
-    ]
-),
-
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=group_bar
-                )
-            ]
-        ),
-    ]
-),   
-
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=group_pie
-                )
-            ]
-        ),
-    ]
-),   
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=task_bar
-                )
-            ]
-        ),
-    ]
-),   
-
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=task_pie
-                )
-            ]
-        ),
-    ]
-),   
-
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=tag_bar
-                )
-            ]
-        ),
-    ]
-),   
-
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=tag_pie
-                )
-            ]
-        ),
-    ]
-),   
-
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=collab_bar
-                )
-            ]
-        ),
-    ]
-),   
-
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=collab_pie
-                )
-            ]
-        ),
-    ]
-),   
-
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=user_bar
-                )
-            ]
-        ),
-    ]
-),   
-
-html.Div(
-    className='row3',
-    children=[
-        html.Div(
-            className='graph33',
-            children=[
-                dcc.Graph(
-                    figure=user_pie
-                )
-            ]
-        ),
-    ]
-),   
+                ]
+            )
+        ]
+    ),
 ])
 
 print(f"Serving Flask app '{current_file}'! 🚀")
