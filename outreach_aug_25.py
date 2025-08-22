@@ -524,7 +524,7 @@ task_pie=px.pie(
         color='black'
     )
 ).update_traces(
-    rotation=170,
+    rotation=120,
     textposition='auto',
     insidetextorientation='horizontal', 
     texttemplate='%{value}<br>(%{percent:.2%})',
