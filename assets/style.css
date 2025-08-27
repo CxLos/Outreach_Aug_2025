@@ -20,21 +20,22 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.5vh;
 
   /* width: 90%; */
   /* margin: 0px 0px 0px 0px; */
     /* margin: 0px auto; */
-  padding: 0px 0px 0px 0px;
+  padding: 10px 0px 0px 0px;
 
   background-color:rgb(145, 100, 182);
   border-bottom: 3px solid rgb(0, 0, 0);
 }
 
 .title {
-  margin: 5px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
   text-align: center;
   color: rgb(217, 191, 24);
-  font-size: 45px;
+  font-size: clamp(35px, 5.5vw, 55px);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -43,7 +44,7 @@ html, body {
   text-align: center;
   color: rgb(0, 0, 0);
    /* color: rgb(217, 191, 24); */
-  font-size: 25px;
+  font-size: clamp(25px, 2vw, 35px);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -182,7 +183,7 @@ html, body {
   /* margin: 0 auto; */
   margin: 25px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
-  font-size: clamp(24px, 4.5vw, 50px);
+  font-size: clamp(24px, 4.5vw, 45px);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   /* font-size: 50px; */
 
@@ -259,7 +260,7 @@ html, body {
   text-align: center;
 
   margin: 0px 0px 0px 0px;
-  padding: 5px 5px 5px 5px;
+  padding: 30px 0px 30px 0px;
 
   border: 15px solid rgb(240, 208, 0);
   border-radius: 100px;
@@ -275,7 +276,7 @@ html, body {
   text-align: center;
 
   margin: 0px 0px 0px 0px;
-  padding: 0px 6px 0px 6px;
+  padding: 0px 7px 0px 7px;
 
   border: 15px solid rgb(240, 208, 0);
   border-radius: 100px;
@@ -295,7 +296,7 @@ html, body {
 
   width: 100%;
   height: auto;
-  margin: 40px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
 }
 
@@ -306,11 +307,11 @@ html, body {
   align-items: center; 
   align-self: center;
 
-  font-size: clamp(24px, 5vw, 50px);
+  font-size: clamp(24px, 4vw, 45px);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: rgb(38, 38, 38);
 
-  margin: 0px 0px 0px 0px;
+  margin: 30px 0px 0px 0px;
   padding: 0px 0px 0px 0px; 
 }
 
@@ -359,7 +360,8 @@ html, body {
   align-items: center;
 
   width: 95%;
-  height: auto;
+  /* height: auto; */
+  height: 80vh;
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
 }
@@ -368,7 +370,9 @@ html, body {
   margin: 0px 0px 0px 0px;
   padding: 10px 15px 0px 10px;
   width: 100%;
-  height: 800px;
+  /* height: 85vh; */
+  width: 100%;
+  height: 100%;
 
   border: 2px solid rgb(0, 0, 0);
   border-radius: 5px;
@@ -381,7 +385,7 @@ html, body {
   margin: 0px 0px 0px 0px;
   padding: 10px 15px 0px 10px;
   width: 95%;
-  height: 1000px;
+  height: 800px;
 
   border: 2px solid rgb(0, 0, 0);
   border-radius: 5px;
@@ -459,8 +463,7 @@ html, body {
   align-items: center;
   gap:3vh;
 
-  margin: 0px 0px 0px 0px;
-  /* margin: 0 10px;  */
+  margin: 1.5% 0px 0px 0px;
   padding: 0px 0px 0px 0px;
   width: 100%;
   height: auto;
@@ -468,11 +471,12 @@ html, body {
 }
 
 .data-title {
-  font-size: clamp(20px, 2.5vw, 50px);
+  font-size: clamp(24px, 4vw, 45px);
+  text-align: center;
   color: rgb(38, 38, 38);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   margin: 5px 0px 0px 0px;
-  padding: 20px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
 }
 
 #applications-table {
@@ -482,8 +486,6 @@ html, body {
   width: 90%;
   /* height: 56vh; */
   height: auto;
-  /* height: clamp(300px, 60vh, 700px); min-height: 250px;  */
-  /* max-height: 800px; */
   overflow-x: auto; 
   /* white-space: nowrap; */
   /* visibility:collapse; */
@@ -498,6 +500,9 @@ html, body {
 
 @media (max-width: 900px) {
 
+  .graph-container {
+    gap: 2vh;
+  }
   .graph-row,
   .rollup-row,
   .data-box {
@@ -505,32 +510,125 @@ html, body {
     width: 100%;
     align-items: stretch;
     gap: 20px; /* vertical gap between stacked items */
+    border: none;
   }
-
+  .graph{
+    height: 40vh;
+  }
   .graph-box,
   .wide-box,
   .databox,
-  .rollup-box-l,
-  .rollup-box-r {
-    width: 100%;
+  .rollup-box-tl,
+  .rollup-box-tr,
+  .rollup-box-bl,
+  .rollup-box-br {
+    width: 93%;
+    margin: 0 auto;
     min-width: 0;
+    border: none;
     border-right: none;
     border-left: none;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid rgb(0, 0, 0);
   }
-
-  .wide-box {
+  .rollup-box-br{
+    border-bottom: 2px solid rgb(0, 0, 0);
+  }
+  .wide-box{
     flex-direction: column;
     width: 100%;
+    height: 45vh;
+    width: 85%;
   }
    #applications-table {
-    width: 95%
+    width: 95%;
+    margin: 0 auto;
   }
-
-  /* .data {
-    width: 98%;
-  } */
-
   .rating_title_text {
     font-size: 12px;
+  }
+  /* axis tick labels */
+  .js-plotly-plot .xtick text,
+  .js-plotly-plot .ytick text {
+    font-size: 10px !important;
+    line-height: 1 !important;
+  }
+
+  /* axis titles (x / y) and subplot titles */
+  .js-plotly-plot .xaxis .title,
+  .js-plotly-plot .yaxis .title,
+  .js-plotly-plot .xytitle,
+  .js-plotly-plot .gtitle {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+  }
+
+  /* trace labels produced by texttemplate / textinfo and trace-layer text */
+  .js-plotly-plot .infolayer text,
+  .js-plotly-plot .textpoint text,
+  .js-plotly-plot .scatterlayer text,
+  .js-plotly-plot .barlayer text,
+  .js-plotly-plot text[class*="infolayer"] {
+    font-size: 14px !important;
+  }
+
+.js-plotly-plot .trace.pie text,
+.js-plotly-plot .pie .textlayer text {
+  display: none !important;
+}
+
+  .js-plotly-plot g.slice text,
+  .js-plotly-plot .pie .textlayer text,
+  .js-plotly-plot .pie .infolayer text,
+  .js-plotly-plot .trace.pie text,
+  .js-plotly-plot .textpoint text {
+    font-size: 10px !important;
+    line-height: 1 !important;
+  }
+
+  /* legend text for pies */
+  .js-plotly-plot .legendtext {
+    font-size: 10px !important;
+  }
+
+  /* hide connector/leader lines if you want them gone */
+  .js-plotly-plot path.connector,
+  .js-plotly-plot polyline.leader,
+  .js-plotly-plot .trace.pie .lines path {
+    display: none !important;
+    stroke: none !important;
+    opacity: 0 !important;
+  }
+
+  /* .js-plotly-plot .textlayer text,
+  .js-plotly-plot .infolayer text,
+  .js-plotly-plot .textpoint text {
+    font-size: 10px !important;
+    line-height: 1 !important;
+  } */
+
+  /* .js-plotly-plot .pie .textlayer text,
+  .js-plotly-plot .pie .infolayer text,
+  .js-plotly-plot .pie .slice text,
+  .js-plotly-plot .pie .textpoint text,
+  .js-plotly-plot .pie .lines,
+  .js-plotly-plot .pie .connector,
+  .js-plotly-plot .pie .pull,
+  .js-plotly-plot .pie .lines path,
+  .js-plotly-plot .pie .connector path,
+  .js-plotly-plot .pie .pull path {
+    font-size: 10px !important;
+    display: none !important;
+    stroke: none !important;
+    opacity: 0 !important;
+  } */
+
+  /* annotations, hover labels, and legend text */
+  .js-plotly-plot .annotation text,
+  .js-plotly-plot .hovertext,
+  .js-plotly-plot .legendtext,
+  .js-plotly-plot .legend .traces text {
+    font-size: 10px !important;
   }
 }
